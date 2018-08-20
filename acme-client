@@ -1,0 +1,8 @@
+#!/bin/sh
+hosts=$(cat /etc/nginx/conf.d/*.conf | grep server_name | uniq | sed s/server_name// | sed s/\;// | sed -e 's/^[ \t]*//')
+
+for host in $hosts; do
+        acme-client -a https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf -Nnmv $host
+done
+
+nginx -s reload

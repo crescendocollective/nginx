@@ -1,0 +1,24 @@
+version: "3.4"
+
+networks:
+  nginx:
+    driver: overlay
+    external: true
+
+volumes:
+  nginx-conf:
+    driver: "local"
+  nginx-acme:
+    driver: "local"
+
+services:
+  nginx:
+    image: crescendocollective/nginx
+    volumes:
+      - nginx-conf:/etc/nginx/conf.d
+      - nginx-acme:/etc/ssl/acme
+    networks:
+      - nginx
+    ports:
+      - 80:80
+      - 443:443
